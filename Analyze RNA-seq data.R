@@ -1,6 +1,5 @@
 #### Process using DESEQ2 ####
 data = read.table("RNAseq_cGSCs_GBMdc_no_names.csv", sep = ";", header = TRUE, row.names = 1)
-#####data = data[,c(4,5,6,13,14,15)] # Maintain only cGSCs and GBMdc
 meta = read.table("Metadata_geneNames.csv", sep = ";", quote = "", header = TRUE)
 data = merge(meta, data, by.x = 1, by.y = 0)
 #write.table(data, "RNAseq_cGSC_and_GBMdc_names.csv", sep = ";", row.names = FALSE)
@@ -24,7 +23,6 @@ library("dplyr")
 ## Import feature counts matrix
 counts = data[,-c(1,2)]
 rownames(counts) = data[,1]
-#######counts = counts[,c(4,5,6,13,14,15)]
 colnames(counts) = c("GBMdc1", "GBMdc2", "GBMdc3", "icGSC1", "icGSC3", "icGSC7")
 
 ## Build a biomart query 
@@ -50,7 +48,7 @@ featureLength = gene.annotations$length
 # Assign mean fragment length into a numeric vector.
 samples.metrics = read.table("MeanFragmentLength.csv", sep=";", header=TRUE, row.names = 1)
 meanFragmentLength = samples.metrics$Mean.Length
-meanFragmentLength = meanFragmentLength##############[c(4,5,6,13,14,15)]
+meanFragmentLength = meanFragmentLength
 
 # Return FPKM into a numeric matrix.
 counts = counts[which(rownames(counts) %in% gene.annotations$ensembl_gene_id),]
